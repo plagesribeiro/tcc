@@ -1,0 +1,3 @@
+.root {
+	@apply flex flex-row flex-wrap gap-6 justify-center w-full;
+}

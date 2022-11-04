@@ -1,0 +1,8 @@
+.root {
+	@apply flex flex-col gap-2 p-6 rounded-lg  max-w-xl flex-1 w-full;
+	min-width: 350px;
+}
+
+.title {
+	@apply font-bold text-2xl;
+}

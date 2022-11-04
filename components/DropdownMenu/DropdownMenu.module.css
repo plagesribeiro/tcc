@@ -1,0 +1,4 @@
+.root {
+	@apply absolute right-0 mt-2 w-60 origin-top-right focus:outline-none rounded-md shadow-lg 
+	ring-1 ring-black ring-opacity-5 divide-y;
+}
