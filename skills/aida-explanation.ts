@@ -4,7 +4,7 @@ const aidaExplanation: Skill = {
 	id: 'aida-explanation',
 	name: 'AIDA framework - Explicação',
 	description:
-		'Crie um framework AIDA (Atenção, Interesse, Desejo e Ação) de copy usando Inteligência Artificial.',
+		'Crie um framework AIDA (Atenção, Interesse, Desejo e Ação) de copy usando Inteligência Artificial. Esse framework é treinado através da explicação do framework AIDA para a GPT-3.',
 	inputs: [
 		{
 			id: 'product-name',
