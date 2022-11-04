@@ -7,7 +7,6 @@ specifiers:
   '@types/react': 18.0.20
   '@types/react-dom': 18.0.6
   autoprefixer: ^10.4.9
-  axios: ^0.27.2
   eslint: 8.23.1
   eslint-config-next: 12.3.0
   next: 12.3.0
@@ -22,7 +21,6 @@ specifiers:
 dependencies:
   '@headlessui/react': 1.7.2_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 1.0.6_react@18.2.0
-  axios: 0.27.2
   next: 12.3.0_biqbaboplfbrettd7655fr4n2y
   next-themes: 0.2.1_c3hne4hwj64hb7tofigd3bvkji
   openai: 3.0.0
@@ -514,15 +512,6 @@ packages:
     resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
     dependencies:
       follow-redirects: 1.15.2
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
-  /axios/0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
-    dependencies:
-      follow-redirects: 1.15.2
-      form-data: 4.0.0
     transitivePeerDependencies:
       - debug
     dev: false
