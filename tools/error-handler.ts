@@ -1,4 +1,4 @@
-function errorHandler(err, res) {
+function errorHandler(err: any, res: any) {
 	if (typeof err === 'string') {
 		// custom application error
 		const is404 = err.toLowerCase().endsWith('not found');
