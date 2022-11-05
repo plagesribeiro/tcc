@@ -1,15 +1,5 @@
 import { Input, Skill } from 'skills';
 
-import { Configuration, OpenAIApi } from 'openai';
-import { settings } from '../../../settings/index';
-
-const configuration = new Configuration({
-	organization: 'org-XI3OPbuger4EFyUWmhRfwzeo',
-	apiKey: settings().OPENAI_KEY
-});
-
-export const openai = new OpenAIApi(configuration);
-
 export const isSkill = (skill: Skill): boolean => skill.openai !== undefined;
 
 export const resolve = (

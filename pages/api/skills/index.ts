@@ -2,10 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import skills from 'skills';
 import type { ShortenedSkill } from 'skills';
 
-export default async function getSkills(
-	request: NextApiRequest,
-	response: NextApiResponse
-) {
+export async function getSkills() {
 	const shortenedSkills: ShortenedSkill[] = skills.map((skill) => {
 		const shortenedSkill = {
 			id: skill.id,
@@ -15,5 +12,13 @@ export default async function getSkills(
 		return shortenedSkill;
 	});
 
-	response.json(shortenedSkills);
+	return shortenedSkills;
+}
+
+export default async function handler(
+	request: NextApiRequest,
+	response: NextApiResponse
+) {
+	const jsonData = await getSkills();
+	response.status(200).json(jsonData);
 }

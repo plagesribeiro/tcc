@@ -2,44 +2,28 @@ import { Button } from '@components/Button';
 import Card from '@components/Card';
 import CardContainer from '@components/CardContainer';
 import { NextPage } from 'next';
+import { generateText } from 'pages/api/openai';
+import { getSkill } from 'pages/api/skills/[id]';
 import React from 'react';
-import type { ShortenedSkill, Skill } from 'skills';
+import type { Skill } from 'skills';
 
 type SkillPageProps = {
 	skill: Skill;
+	openAiKey: string;
 };
 
-export async function getStaticPaths() {
-	// Call /api/frameworks to get the list of frameworks
-	const res = await fetch('http://localhost:3000/api/skills');
-	const skills: ShortenedSkill[] = await res.json();
-	const paths = skills.map((skill) => ({ params: { id: skill.id } }));
-
-	return {
-		paths,
-		fallback: false
-	};
-}
-
-export async function getStaticProps(context: { params: { id: string } }) {
-	const { id } = context.params;
-
-	const res = await fetch(`http://localhost:3000/api/skills/${id}`);
-	const skill: Skill = await res.json();
-
-	return {
-		props: {
-			skill
-		}
-	};
+export async function getServerSideProps(context: { params: { id: string } }) {
+	const skill = await getSkill(context.params.id);
+	const openAiKey = process.env.OPENAI_API_KEY;
+	return { props: { skill, openAiKey } };
 }
 
 const { useState } = React;
 
 const BlogPage: NextPage<SkillPageProps> = (props) => {
-	const { skill } = props;
+	const { skill, openAiKey } = props;
 	const [isLoading, setIsLoading] = useState(false);
-	const [generatedText, setGeneratedText] = useState([]);
+	const [generatedText, setGeneratedText] = useState<string[]>([]);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -55,22 +39,16 @@ const BlogPage: NextPage<SkillPageProps> = (props) => {
 					[input.id]: e.currentTarget[input.id].value
 				})
 		);
-		const res = await fetch(`http://localhost:3000/api/openai`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
+		const generatedText = await generateText(
+			skill.id,
+			{
+				...inputs
 			},
-			body: JSON.stringify({
-				skillId: skill.id,
-				inputs: {
-					...inputs
-				}
-			})
-		});
-		// console log the response of the API
-		const response = await res.json();
-		console.log(response);
-		setGeneratedText(response);
+			openAiKey
+		);
+		if (!generatedText) return;
+
+		setGeneratedText(generatedText);
 		setIsLoading(false);
 	};
 
@@ -136,7 +114,7 @@ const BlogPage: NextPage<SkillPageProps> = (props) => {
 						{generatedText.map((text) => (
 							<Card
 								key={text}
-								className='bg-[#f2f2f2] dark:bg-[#1f1d26]'
+								bgColor='bg-background-light dark:bg-background-dark'
 							>
 								<div
 									className='product-des'

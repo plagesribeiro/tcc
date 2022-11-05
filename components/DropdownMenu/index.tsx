@@ -1,16 +1,23 @@
 import { Menu, Transition } from '@headlessui/react';
 import { BookOpenIcon } from '@heroicons/react/solid';
-import { Fragment } from 'react';
+import { getSkills } from 'pages/api/skills';
+import { Fragment, useEffect, useState } from 'react';
 import { ShortenedSkill } from 'skills';
 import styles from './DropdownMenu.module.css';
 
-type DropdownMenuProps = {
-	skills?: ShortenedSkill[];
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+const DropdownMenu = () => {
+	const [skills, setSkills] = useState<ShortenedSkill[]>([]);
 
-const DropdownMenu: React.FunctionComponent<DropdownMenuProps> = (
-	context: any
-) => {
+	const loadSkills = async () => {
+		const shortenedSkills = await getSkills();
+
+		setSkills(shortenedSkills);
+	};
+
+	useEffect(() => {
+		loadSkills();
+	}, []);
+
 	return (
 		<Transition
 			as={Fragment}
@@ -26,7 +33,7 @@ const DropdownMenu: React.FunctionComponent<DropdownMenuProps> = (
 				bg-background-light-secondary dark:bg-background-dark-secondary`}
 			>
 				<div className='px-1 py-1 '>
-					{context?.skills?.map((skill: ShortenedSkill) => (
+					{skills.map((skill: ShortenedSkill) => (
 						<Menu.Item key={skill.id}>
 							{({ active }) => (
 								<button

@@ -1,23 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Skill } from 'skills';
-import {
-	formatOutput,
-	isSkill,
-	openai,
-	resolve,
-	sanitizeVariables
-} from './service';
+import { Configuration, OpenAIApi } from 'openai';
+import { getSkill } from '../skills/[id]';
+import { formatOutput, isSkill, resolve, sanitizeVariables } from './service';
 
-export default async function generateText(
-	request: NextApiRequest,
-	response: NextApiResponse
+export async function generateText(
+	skillId: string,
+	inputs: Record<string, unknown>,
+	openAiKey: string
 ) {
 	const quantity = 2;
-	const skillId = request.body.skillId;
-	const inputs = request.body.inputs;
 
-	const res = await fetch(`http://localhost:3000/api/skills/${skillId}`);
-	const skill: Skill = await res.json();
+	const configuration = new Configuration({
+		organization: 'org-XI3OPbuger4EFyUWmhRfwzeo',
+		apiKey: openAiKey
+	});
+	const openai = new OpenAIApi(configuration);
+
+	const skill = await getSkill(skillId);
+	if (!skill) {
+		return null;
+	}
 
 	const sanitizedVariables = sanitizeVariables(skill, inputs);
 	const completions: string[] = [];
@@ -30,7 +32,7 @@ export default async function generateText(
 		delete openaiOptions.engine;
 
 		try {
-			const response = await openai.createCompletion(
+			const openAiResp = await openai.createCompletion(
 				{
 					model: engine,
 					prompt: text,
@@ -42,10 +44,10 @@ export default async function generateText(
 				}
 			);
 
-			if (response.data.choices) {
+			if (openAiResp.data.choices) {
 				let i = 0;
 				await Promise.all(
-					response.data.choices.map((choice) => {
+					openAiResp.data.choices.map((choice) => {
 						if (choice.text) {
 							const formattedText = formatOutput(skill, choice.text);
 							completions[i] = formattedText;
@@ -61,11 +63,32 @@ export default async function generateText(
 			} else {
 				console.error(error.message);
 			}
+			throw new Error(error.message);
 		}
 	} else {
 		throw new Error('Skill not found or not supported');
 	}
 
-	response.json(completions);
 	return completions;
+}
+
+export default async function handler(
+	request: NextApiRequest,
+	response: NextApiResponse
+) {
+	const id = request.body.skillId;
+	const inputs = request.body.inputs;
+	const openAiKey = request.body.openAiKey;
+
+	const jsonData = await generateText(
+		id as string,
+		inputs as Record<string, unknown>,
+		openAiKey
+	);
+
+	if (jsonData) {
+		response.status(200).json(jsonData);
+	} else {
+		response.status(404).json({ message: 'Skill not found' });
+	}
 }

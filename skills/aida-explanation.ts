@@ -21,7 +21,7 @@ const aidaExplanation: Skill = {
 		}
 	],
 	model: `
-	A estrutura deve seguir o seguinte formato:
+	A estrutura do texto deve seguir o seguinte formato:
 
 	Título: Escrever um título chamativo que demostre urgência (crie a sensação que o leitor precisa do seu produto com urgência, seja através de uma promoção relâmpago ou algum prêmio caso ele compre agora), originalidade (mostrar que seu produto é único e diferente dos outros), utilidade (mostrar que seu produto é útil para resolver o problema específico do leitor).
 	
@@ -37,7 +37,7 @@ const aidaExplanation: Skill = {
 	Nome do produto: {{product-name}}
 	Descrição do produto: {{product-description}}
 	"""
-	Exemplo de texto sobre o produto acima na estrutura explicada em português do Brasil:	
+	Exemplo de texto sobre o produto acima no formato explicado acima em português do Brasil:	
     `,
 	keywords: ['Título', 'Atenção:', 'Interesse:', 'Desejo:', 'Ação:'],
 	openai: {
