@@ -127,5 +127,5 @@ export async function query(params = {}, openAiKey: string) {
 		requestOptions
 	);
 	const data = await response.json();
-	return data.choices[0].text;
+	return data;
 }
