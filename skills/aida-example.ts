@@ -52,7 +52,8 @@ const aidaExample: Skill = {
 	keywords: ['Título', 'Atenção:', 'Interesse:', 'Desejo:', 'Ação:'],
 	openai: {
 		max_tokens: 350,
-		temperature: 1
+		temperature: 1,
+		engine: 'text-davinci-002'
 	}
 };
 
