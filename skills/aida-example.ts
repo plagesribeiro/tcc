@@ -2,9 +2,13 @@ import type { Skill } from 'skills';
 
 const aidaExample: Skill = {
 	id: 'aida-example',
-	name: 'AIDA framework - Exemplo',
-	description:
-		'Crie um framework AIDA (Atenção, Interesse, Desejo e Ação) de copy usando Inteligência Artificial. Esse framework é treinado através da explicação do framework AIDA para a GPT-3.',
+	name: 'AIDA com título - Exemplo',
+	description: `O Framework AIDA com título cria um texto contendo os tópicos: Título, Atenção, Interesse, Desejo e Ação. 
+	Esse framework é treinado através de exemplos de textos que seguem esse formato.
+	Para utilizar essa ferramenta, basta inserir o nome do produto e a descrição do produto que deseja anúnciar.
+	Não esqueça de deixar a descrição bem clara e use como inspiração os exemplos de textos que estão nos inputs.
+	Depois basta clicar em "Gerar Texto" e aguardar o resultado. Pronto! Você já tem um texto que converte mais para 
+	anunciar seu produto ou serviço no seu site, instagram, vídeo ou em algum marketplace.`,
 	inputs: [
 		{
 			id: 'product-name',
@@ -15,8 +19,7 @@ const aidaExample: Skill = {
 		{
 			id: 'product-description',
 			name: 'Descrição do Produto',
-			example:
-				'Com essa ferramenta de inteligência artificial você vai conseguir escrever textos persuasivos mesmo que você não saiba nada sobre comunicação persuasiva e.',
+			example: `Com a Escreve AI ferramenta de inteligência artificial você vai conseguir escrever textos persuasivos mesmo que você não saiba nada sobre comunicação persuasiva e copywriting. Apenas colocando o nome do seu negócio e fornecendo uma breve explicação sobre ele é possível gerar textos baseados em heurísticas de copywriting que aumentem suas vendas. Os textos gerados podem ser usados em emails, legenda de Instagram, post no Twitter e etc...`,
 			maxLength: 350
 		}
 	],
@@ -49,7 +52,8 @@ const aidaExample: Skill = {
 	keywords: ['Título', 'Atenção:', 'Interesse:', 'Desejo:', 'Ação:'],
 	openai: {
 		max_tokens: 350,
-		temperature: 0.7
+		temperature: 1,
+		engine: 'text-davinci-002'
 	}
 };
 

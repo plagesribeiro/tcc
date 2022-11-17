@@ -54,12 +54,15 @@ const BlogPage: NextPage<SkillPageProps> = (props) => {
 
 	return (
 		<div className='flex flex-col w-full items-center'>
-			<h1 className='font-bold text-xl flex items-start w-full'>
-				{skill.name}
-			</h1>
-			<h1 className='text-sm flex items-start w-full mb-6'>
-				{skill.description}
-			</h1>
+			<div className='max-w-[80rem]'>
+				<h1 className='font-bold text-xl flex items-start max-w-full'>
+					{skill.name}
+				</h1>
+				<h1 className='text-sm flex items-start w-full mb-6'>
+					{skill.description}
+				</h1>
+			</div>
+
 			<CardContainer>
 				<Card>
 					<h1 className='font-bold text-xl flex items-start w-full mb-4'>
