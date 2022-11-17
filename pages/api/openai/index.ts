@@ -54,10 +54,12 @@ export async function generateText(
 				}
 			);*/
 
-			if (openAiResp.data.choices) {
+			console.log('hey', openAiResp);
+
+			if (openAiResp.choices) {
 				let i = 0;
 				await Promise.all(
-					openAiResp.data.choices.map((choice: any) => {
+					openAiResp.choices.map((choice: any) => {
 						if (choice.text) {
 							const formattedText = formatOutput(skill, choice.text);
 							completions[i] = formattedText;

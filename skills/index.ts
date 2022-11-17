@@ -1,7 +1,7 @@
 import aidaExample from './aida-example';
 import aidaExplanaition from './aida-explanation';
 
-const Skills = [aidaExample, aidaExplanaition];
+const Skills = [aidaExplanaition, aidaExample];
 
 export default Skills;
 
